@@ -1,6 +1,1 @@
-Thanks for downloading this template!
-
-Template Name: Bootslander
-Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+Take Care for You is a website for providing pick-up and drop-off services for seniors and people with disabilities who want to travel but are unable to do so on their own or have no one to take them. We have equipment to assist people with disabilities and can also see through cameras on the vehicle how the journey is for those who are concerned. There is also a function to detect sign language using AI to detect. However, this is just a prototype, with more development to come later.
