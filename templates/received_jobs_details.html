@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        #image-container {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <script>
+        // รีเฟรชหน้าเว็บทุก ๆ 1 วินาที
+        setInterval(function() {
+            location.reload();
+        }, 5000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron bg-primary text-white">
+            <h1 class="display-4">ข้อมูลคนขับ</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Driver Name: {{ job.driver_name }}</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Phone Number: {{ job['phone_number'] }}</h5>
+                <h5 class="card-title">Car Type: {{ job['car_type'] }}</h5>
+                <h5 class="card-title">Vehicle Plate: {{ job['vehicle_plate'] }}</h5>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">หมายเลขทำการ: {{ customer['id'] }}</h5>
+            </div>
+        </div>
+
+        <div class="jumbotron bg-primary text-white mt-4">
+            <h1 class="display-4">ภาพภายในรถ</h1>
+        </div>
+
+        <div class="card">
+            <img src="data:image/png;base64,{{ driver.filename }}" alt="Driver" class="card-img-top" width="500" height="300">
+            <div class="card-body">
+                <h5 class="card-title">Filename: {{ driver['filename'] }}</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- เรียกใช้ JavaScript ของ Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

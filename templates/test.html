@@ -1,0 +1,191 @@
+{% extends 'layout.html' %}
+ 
+{% block title %}Take Care for U{% endblock %}
+ 
+{% block content %}
+  <!-- ======= Hero Section ======= 
+  <section id="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+      </div>
+    </div>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg> 
+
+  </section> -->
+  <head>
+	<meta charset="utf-8">
+	<title>Take Care for U</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="static/css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Icons font CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/mdi-font/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome-4.7/css/font-awesome.min.css') }}">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    
+    <!-- Vendor CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/datepicker/daterangepicker.css') }}">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="static/css/style3.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/getstart_main.css') }}">
+</head>
+<body>
+	<div class="page-content bg-blue">
+		<div class="wizard-v10-content">
+			<div class="wizard-form font-poppins">
+				<div class="wizard-header">
+					<h3>กรุณากรอกข้อมูลผู้ใช้บริการ</h3>
+				</div>
+		        <form class="form-register" action="{{url_for('teststart')}}" method="POST">
+		        	<div id="form-total">
+		        		<!-- SECTION 1 -->
+			            <h2>1</h2>
+			            <section>
+			                <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">first name</label>
+                                        <input class="input--style-4" type="text" name="first_name" id="firstname" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">last name</label>
+                                        <input class="input--style-4" type="text" name="last_name" id="lastname" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Age</label>
+                                        <input class="input--style-4" type="text" name="age" id="age" class="input-text">
+                                    </div>
+                                </div>
+    
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Gender</label>
+                                        <div class="p-t-10">
+                                            <label class="radio-container m-r-45">Male
+                                                <input type="radio" name="gender" id="gender" value="male">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container">Female
+                                                <input type="radio" name="gender" id="gender" value="female">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Weight</label>
+                                        <input class="input--style-4" type="text" name="weight" id="weight" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Height</label>
+                                        <input class="input--style-4" type="text" name="height" id="height" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="input-group">
+                                    <div class="input-group">
+                                        <label class="label">Phone</label>
+                                        <input class="input--style-4" type="text" name="phone" id="phone" class="input-text">
+                                    </div>
+                            </div>
+    
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <label class="label">Sick</label>
+                                    <input class="input--style-4" type="text" name="sick" id="sick" class="input-text">
+                                </div>
+                            </div>
+			            </section>
+						<!-- SECTION 2 -->
+			            <h2>2</h2>
+			            <section>
+			                <div class="inner">
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<label for="email">Email Address</label>
+										<input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<label for="email">Email Address</label>
+										<input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<label for="password">Password</label>
+										<input type="password" class="form-control" id="password" name="password">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<label for="email">Email Address</label>
+										<input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+									</div>
+								</div>
+							</div>
+			            </section>
+			            <!-- SECTION 3 -->
+			            <h2>3</h2>
+			            <section>
+			                <div class="inner">
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<label for="subject">Subject</label>
+										<select name="subject" id="subject" class="form-control">
+											<option value="" disabled selected>Your Subject</option>
+											<option value="Finance">Finance</option>
+											<option value="Marketing">Marketing</option>
+											<option value="IT Support">IT Support</option>
+										</select>
+										<span class="select-btn">
+											<i class="zmdi zmdi-chevron-down"></i>
+										</span>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<label for="comment">Comment</label>
+										<input type="text" name="comment" class="form-control" id="comment">
+									</div>
+								</div>
+							</div>
+			            </section>
+		        	</div>
+		        </form>
+			</div>
+		</div>
+	</div>
+    <script src="static/js/jquery-3.3.1.min.js"></script>
+    <script src="static/js/jquery.steps.js"></script>
+    <script src="static/js/main2.js"></script>
+</body>
+{% endblock %}

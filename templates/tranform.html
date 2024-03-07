@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geocoding</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE"></script>
+    <script>
+      function geocodeAddress() {
+        // Get the address value from the input element
+        var address = document.getElementById('address').value;
+        
+        // Create a new Geocoder object
+        var geocoder = new google.maps.Geocoder();
+        
+        // Make a request to the Geocoding API
+        geocoder.geocode({ address: address }, function(results, status) {
+          if (status === 'OK') {
+            // Get the first result
+            var location = results[0].geometry.location;
+            
+            // Display the latitude and longitude
+            document.getElementById('lat').textContent = location.lat();
+            document.getElementById('lng').textContent = location.lng();
+          } else {
+            // Display an error message
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Geocoding</h1>
+    <p>Enter an address and click the "Geocode" button to get the latitude and longitude.</p>
+    <form>
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" placeholder="Enter an address">
+      <button type="button" onclick="geocodeAddress()">Geocode</button>
+    </form>
+    <p>Latitude: <span id="lat"></span></p>
+    <p>Longitude: <span id="lng"></span></p>
+  </body>
+</html>

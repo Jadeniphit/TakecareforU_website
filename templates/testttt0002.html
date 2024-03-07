@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Save Location</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-T+wp6X/tU96Fyqw6GJl6dZSzL+99D28KyZ8n2ORUeJ5FX9CmgVJld2S+0Nue5v5/5+exwMf+mE4Z7V4YRt9mOg==" crossorigin=""/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-gGpB/mFswfDX43vEeQJg3iMG3fZzWNRZvYLy5C9V7gA8Qk34Av7vIGmiUGfFYw7a4E4CRRG7sbDfNc6xMd0smg==" crossorigin=""></script>
+</head>
+<body>
+	<h1>Save Location</h1>
+	<form method="post" action="">
+		<label for="latitude">Latitude:</label>
+		<input type="text" id="latitude" name="latitude"><br><br>
+		<label for="longitude">Longitude:</label>
+		<input type="text" id="longitude" name="longitude"><br><br>
+		<input type="submit" value="Save">
+	</form>
+	<div id="mapid" style="height: 500px;"></div>
+<script>
+	function showPosition(position) {
+		var latitude = position.coords.latitude;
+		var longitude = position.coords.longitude;
+		document.getElementById("latitude").value = latitude;
+		document.getElementById("longitude").value = longitude;
+
+		// create map and set initial view
+		var mymap = L.map('mapid').setView([latitude, longitude], 13);
+
+		// add tile layer to map
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+		  maxZoom: 18,
+		}).addTo(mymap);
+
+		// add marker to map
+		L.marker([latitude, longitude]).addTo(mymap);
+	}
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+
+	getLocation();
+</script>
+</body>
+</html>

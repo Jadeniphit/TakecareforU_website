@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Take Care for U</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<!-- 
+        <link rel="stylesheet" type="text/css" href="static/css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    -->     
+	<!-- Icons font CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/mdi-font/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome-4.7/css/font-awesome.min.css') }}">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    
+    <!-- Vendor CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/datepicker/daterangepicker.css') }}">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="static/css/style3.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/getstart_main.css') }}">
+
+    <!-- gps  
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+    <style>
+    #map {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+    }
+    </style> 
+    <!-- gps -->
+    <script src="static/js/jquery-3.3.1.min.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="static/js/jquery.steps.js"></script>
+    <script src="static/js/main2.js"></script>
+</head>
+<body>
+	<div class="page-content bg-blue">
+		<div class="wizard-v10-content">
+			<div class="wizard-form font-poppins">
+				<div class="wizard-header">
+					<h3>กรุณากรอกข้อมูลผู้ใช้บริการ</h3>
+				</div>
+		        <form class="form-register" action="{{url_for('getstart')}}" method="POST">
+		        	<div id="form-total">
+		        		<!-- SECTION 1 -->
+			            <h2>1</h2>
+			            <section>
+			                <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">first name</label>
+                                        <input class="input--style-4" type="text" name="first_name" id="firstname" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">last name</label>
+                                        <input class="input--style-4" type="text" name="last_name" id="lastname" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Age</label>
+                                        <input class="input--style-4" type="text" name="age" id="age" class="input-text">
+                                    </div>
+                                </div>
+    
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Gender</label>
+                                        <div class="p-t-10">
+                                            <label class="radio-container m-r-45">Male
+                                                <input type="radio" name="gender" id="gender" value="male">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container">Female
+                                                <input type="radio" name="gender" id="gender" value="female">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Weight</label>
+                                        <input class="input--style-4" type="text" name="weight" id="weight" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Height</label>
+                                        <input class="input--style-4" type="text" name="height" id="height" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="input-group">
+                                    <div class="input-group">
+                                        <label class="label">Phone</label>
+                                        <input class="input--style-4" type="text" name="phone" id="phone" class="input-text">
+                                    </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <label class="label">Sick</label>
+                                    <input class="input--style-4" type="text" name="sick" id="sick" class="input-text">
+                                </div>
+                            </div>
+			            </section>
+						<!-- SECTION 2 -->
+			            <h2>2</h2>
+			            <section>
+			                <div class="inner">
+                                <!-- gps 
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<b><label for="from-input">From</label></b>
+                                        <input type="search" class="form-control" id="from-input" placeholder="From">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<b><label for="to-input">To</label></b>
+                                        <input type="search" class="form-control" id="to-input" placeholder="To">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<b><label for="to-input">Step At</label></b>
+                                        <input type="text" class="form-control" placeholder="Step At">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<label for="email">Email Address</label>
+										<input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+									</div>
+								</div> -->
+
+                                
+			
+        
+                                <div class="input-group">
+                                        <div class="input-group">
+                                            <b><label class="label" for="starts">From</label></b>
+                                            <input class="input--style-4" type="search" class="form-control" name="starts" id="starts" placeholder="From">
+                    
+                                        </div>
+                                </div>
+        
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <b><label class="label" for="Ends">To</label></b>
+                                        <input class="input--style-4" type="search" class="form-control" name="Ends" id="Ends" placeholder="To">
+                                        
+                                    </div>
+                                </div>
+
+                                
+                                <!-- ด้านล่างต่อไปนี้เป็นแมพ -->
+                                <div id="map"></div> <!-- เรียกแมพ -->
+                                <script>    
+                                    
+                                    var markers = [];
+                                    var locations = [];
+                                    var map;
+                                    var distanceDirection;
+                                    var distanceDisplay;
+                                    var vp;
+                                    function string2Location(input, index) {
+                                        var searchBox = new google.maps.places.SearchBox(input);
+                                        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                                        map.addListener('bounds_changed', function() {
+                                            searchBox.setBounds(map.getBounds());
+                                        });
+                                        distanceDirection = new google.maps.DirectionsService();
+                                        distanceDisplay = new google.maps.DirectionsRenderer();
+                                        searchBox.addListener('places_changed', function() {
+                                            var places = searchBox.getPlaces();
+                                            if(places.length == 0) {
+                                                return;
+                                            }
+                                            markers[index].setMap(null);
+                                            var bounds = new google.maps.LatLngBounds();
+                                            places.forEach(function(place) {
+                                                if(!place.geometry) {
+                                                    console.log("Returned place contains no geometry");
+                                                    return;
+                                                }
+                                                var icon = {
+                                                    url: place.icon,
+                                                    size: new google.maps.Size(71, 71),
+                                                    origin: new google.maps.Point(0, 0),
+                                                    anchor: new google.maps.Point(17, 34),
+                                                    scaledSize: new google.maps.Size(25, 25)
+                                                };
+                                                markers[index]=new google.maps.Marker({
+                                                    map: map,
+                                                    icon: icon,
+                                                    title: place.name,
+                                                    position: place.geometry.location
+                                                });
+                                                if(index == 0) {
+                                                    locations[index]=place.geometry.location;
+                                                }
+                                                else {
+                                                    locations[index]=place.geometry.location;
+                                                }
+                                                console.log(locations[index].lat() + ", " + locations[index].lng());
+                                                if(place.geometry.viewport) {
+                                                    bounds.union(place.geometry.viewport);
+                                                } else {
+                                                    bounds.extend(place.geometry.location);
+                                                }
+                                            });
+                                            map.fitBounds(bounds);
+                                            distanceDisplay.setMap(map);
+                                            calcRoute();
+                                            
+
+                                        });
+                                    }
+                                    function initAutocomplete() {
+                                        locations[0] = new google.maps.LatLng();
+                                        locations[1] = new google.maps.LatLng();
+                                        markers[0] = new google.maps.Marker();
+                                        markers[1] = new google.maps.Marker();
+                                        map = new google.maps.Map(document.getElementById('map'), {
+                                            // Default position...
+                                            center: {
+                                                lat: 13.281260,
+                                                lng: 100.924123
+                                            },
+                                            zoom: 13,
+                                            mapTypeId: 'roadmap'
+                                        });
+                                        var field=[];
+                                        field[0] = document.getElementById('starts');
+                                        field[1] = document.getElementById('Ends');
+                                        string2Location(field[0], 0);
+                                        string2Location(field[1], 1);
+                                        for(var i = 0;i<=1;i++) {
+                                            // console.log(i);
+                                            // console.log(field[i]);
+                                            field[i].addEventListener('change', function() {
+                                                calcRoute();
+                                            });
+                                            field[i].addEventListener('input', function() {
+                                                calcRoute();
+                                            });
+                                            field[i].addEventListener('paste', function() {
+                                                calcRoute();
+                                            });
+                                            field[i].addEventListener('cut', function() {
+                                                calcRoute();
+                                            });
+                                            field[i].addEventListener('copy', function() {
+                                                calcRoute();
+                                            });
+                                        }
+                                        // google.maps.event.addDomListener(document.getElementById('submit'), 'click', calcRoute);
+                                    }
+                                    function calcDistance(start, end) {
+                                        return(google.maps.geometry.spherical.computeDistanceBetween(start, end) / 1000).toFixed(2); //KM
+                                    }
+                                    function calcRoute() {
+                                        var start = new google.maps.LatLng(locations[0].lat(), locations[0].lng());
+                                        var end = new google.maps.LatLng(locations[1].lat(), locations[1].lng());
+                                      
+                                        if (isNaN(locations[0].lat()) === true || isNaN(locations[0].lng()) === true || isNaN(locations[1].lat()) === true || isNaN(locations[1].lng()) === true) {
+                                          return;
+                                        }
+                                        
+                                        var value_distance = document.querySelector("#valuedistance");
+                                        var value_price = document.querySelector("#valueprice");
+                                        var distance = calcDistance(start, end);
+                                        
+                                        value_distance.innerHTML = distance + " KM";
+                                        updateRealDis(distance); // เรียกใช้ฟังก์ชัน updateRealDis
+                                      
+                                        value_price.innerHTML = (distance * 10);
+                                        vp = myFunction();
+                                        value_price.innerHTML = vp;
+                                        
+                                        var bounds = new google.maps.LatLngBounds();
+                                        bounds.extend(start);
+                                        bounds.extend(end);
+                                        map.fitBounds(bounds);
+                                        
+                                        var request = {
+                                          travelMode: google.maps.TravelMode.DRIVING,
+                                          origin: start,
+                                          destination: end,
+                                        };
+                                      
+                                        distanceDirection.route(request, function (response, status) {
+                                          if (status == google.maps.DirectionsStatus.OK) {
+                                            distanceDisplay.setDirections(response);
+                                            distanceDisplay.setMap(map);
+                                          } else {
+                                            // alert("Error: From " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed : " + status);
+                                          }
+                                        });
+                                      }
+                                    function updateRealDis(distance) {
+                                        var realDis = document.getElementById('realdis');
+                                        realDis.value = distance;
+                                      }
+                                      
+                                    function myFunction() {
+                                        var letter = document.getElementById("sv_type").value; 
+                                        if (letter === "รับ-ส่ง"){
+                                            value_price = (valueprice + 120) + " BAHT";
+                                        } 
+                                        if (letter === "รอ 1 ชม.") {
+                                            value_price = (valueprice + 150) + " BAHT";
+                                        }
+                                        if (letter === "รอ 2 ชม.") {
+                                            value_price.innerHTML=(distance * 5 + 300) + " BAHT";
+                                        }
+                                        if (letter === "รอ 3 ชม.") {
+                                            value_price.innerHTML=(distance * 5 + 450) + " BAHT";
+                                        }
+                                        if (letter === "รอ 4 ชม.") {
+                                            value_price.innerHTML=(distance * 5 + 600) + " BAHT";
+                                        }
+                                        if (letter === "รอ 5 ชม.") {
+                                            value_price.innerHTML=(distance * 5 + 750) + " BAHT";
+                                        } 
+                                        else {
+                                            value_price.innerHTML=(distance * 5 + 1000) + " BAHT";
+                                        }
+                                    }
+                                </script>
+                                
+                                <!-- จบแมพ -->
+                            </div>
+			            </section>
+			            <!-- SECTION 3 -->
+			            <h2>3</h2>
+			            <section>
+			                <div class="inner">
+								<!-- <div id="form" class="form-horizontal col-sm-4"> -->
+                                    <div class="input-group">
+                                        <b><label for="Ends">Distance</label></b>
+                                        <label id="valuedistance" name="valuedistance">Press on the Booking button to calculate...</label>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">ยืนยันระยะทางทั้งหมด</label>
+                                                <input class="input--style-4" type="text" name="realdis" id="realdis" class="input-text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="input-group">
+                                        <b><label for="Ends">Total Price</label></b>
+                                        <label id="valueprice" name="valueprice">Press on the Booking button to calculate...</label>
+                                    </div>-->
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <label class="label">เลือกบริการ</label>
+                                            <label class="radio-container m-r-45">รับ-ส่ง
+                                                <input type="radio" name="sv_type" id="sv_type" value="รับ-ส่ง">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอ 1 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอ 1 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอ 2 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอ 2 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอ 3 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอ 3 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอ 4 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอ 4 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอ 5 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอ 5 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">รอมากกว่า 6 ชม.
+                                                <input type="radio" name="sv_type" id="sv_type" value="รอมากกว่า 6 ชม.">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <label class="label">เลือกอุปกรณ์ช่วยเหลือ</label>
+                                            <label class="radio-container m-r-45">รถเข็น 120 บาท
+                                                <input type="radio" name="sv_eqm" id="sv_eqm" value="รถเข็น">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">ไม้เท้าช่วยพยุง 100 บาท
+                                                <input type="radio" name="sv_eqm" id="sv_eqm" value="ไม้เท้าช่วยพยุง">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container m-r-45">ไม่รับ
+                                                <input type="radio" name="sv_eqm" id="sv_eqm" value="ไม่รับ">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">ยืนยันระยะทางทั้งหมด</label>
+                                                <input class="input--style-4" type="text" name="realdis" id="realdis" class="input-text">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">ยืนยันจำนวนเงินที่จะต้องชำระ</label>
+                                                <input class="input--style-4" type="text" name="realprice" id="realprice" class="input-text">
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                <!-- </div> -->
+							</div>
+                            <div class="p-t-15">
+                                <button class="btn btn--radius-2 btn--blue">ค้นหาผู้ขับ</button>
+                            </div>
+			            </section>
+		        	</div>
+		        </form>
+			</div>
+		</div>
+	</div>
+    
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map</title>
+    <style>
+      /* Set the size of the map */
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Customer Location</h3>
+    <div id="map"></div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=<AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE>"></script>
+
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+  </body>
+</html>

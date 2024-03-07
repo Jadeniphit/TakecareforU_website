@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Save Location</title>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE"></script>
+	<style>
+		#map {
+			height: 500px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Save Location</h1>
+	<form method="post" action="">
+		<label for="latitude">Latitude:</label>
+		<input type="text" id="latitude" name="latitude"><br><br>
+		<label for="longitude">Longitude:</label>
+		<input type="text" id="longitude" name="longitude"><br><br>
+		<input type="submit" value="Save">
+	</form>
+	<div id="map"></div>
+<script>
+	function initMap() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var latitude = position.coords.latitude;
+				var longitude = position.coords.longitude;
+				document.getElementById("latitude").value = latitude;
+				document.getElementById("longitude").value = longitude;
+
+				var map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: latitude, lng: longitude},
+					zoom: 13
+				});
+
+				var marker = new google.maps.Marker({
+					position: {lat: latitude, lng: longitude},
+					map: map
+				});
+			});
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+
+	initMap();
+</script>
+</body>
+</html>

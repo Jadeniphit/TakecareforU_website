@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Take Care for U</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="static/css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="static/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Icons font CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/mdi-font/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome-4.7/css/font-awesome.min.css') }}">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    
+    <!-- Vendor CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/datepicker/daterangepicker.css') }}">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="static/css/style3.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style3.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/getstart_main.css') }}">
+
+    <!-- gps  
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+    <style>
+    #map {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+    }
+    </style> 
+    <!-- gps -->
+
+</head>
+<body>
+	<div class="page-content bg-blue">
+		<div class="wizard-v10-content">
+			<div class="wizard-form font-poppins">
+				<div class="wizard-header">
+					<h3>กรุณากรอกข้อมูลผู้ใช้บริการ</h3>
+				</div>
+		        <form class="form-register" action="{{url_for('teststart')}}" method="POST">
+		        	<div id="form-total">
+		        		<!-- SECTION 1 -->
+			            <h2>1</h2>
+			            <section>
+			                <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">first name</label>
+                                        <input class="input--style-4" type="text" name="first_name" id="firstname" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">last name</label>
+                                        <input class="input--style-4" type="text" name="last_name" id="lastname" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Age</label>
+                                        <input class="input--style-4" type="text" name="age" id="age" class="input-text">
+                                    </div>
+                                </div>
+    
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Gender</label>
+                                        <div class="p-t-10">
+                                            <label class="radio-container m-r-45">Male
+                                                <input type="radio" name="gender" id="gender" value="male">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container">Female
+                                                <input type="radio" name="gender" id="gender" value="female">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Weight</label>
+                                        <input class="input--style-4" type="text" name="weight" id="weight" class="input-text">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Height</label>
+                                        <input class="input--style-4" type="text" name="height" id="height" class="input-text">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="input-group">
+                                    <div class="input-group">
+                                        <label class="label">Phone</label>
+                                        <input class="input--style-4" type="text" name="phone" id="phone" class="input-text">
+                                    </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <label class="label">Sick</label>
+                                    <input class="input--style-4" type="text" name="sick" id="sick" class="input-text">
+                                </div>
+                            </div>
+                            <div class="p-t-15">
+                                <button class="btn btn--radius-2 btn--blue">บันทึกข้อมูล</button>
+                            </div>
+			            </section>
+						<!-- SECTION 2 -->
+			            <h2>2</h2>
+			            <section>
+			                <div class="inner">
+                                <!-- gps 
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<b><label for="from-input">From</label></b>
+                                        <input type="search" class="form-control" id="from-input" placeholder="From">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<b><label for="to-input">To</label></b>
+                                        <input type="search" class="form-control" id="to-input" placeholder="To">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-holder form-holder-2">
+										<b><label for="to-input">Step At</label></b>
+                                        <input type="text" class="form-control" placeholder="Step At">
+									</div>
+                                    <div class="form-holder form-holder-2">
+										<label for="email">Email Address</label>
+										<input type="email" class="form-control" id="email" name="email" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+									</div>
+								</div> -->
+
+                                
+			
+        
+                                <div class="input-group">
+                                        <div class="input-group">
+                                            <b><label class="label" for="from-input">From</label></b>
+                                            <input class="input--style-4" type="search" class="form-control" id="from-input" placeholder="From">
+                    
+                                        </div>
+                                </div>
+        
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <b><label class="label" for="to-input">To</label></b>
+                                        <input class="input--style-4" type="search" class="form-control" id="to-input" placeholder="To">
+                                        
+                                    </div>
+                                </div>
+							</div>
+                            <div id="map"></div>
+                            <script>
+                                var markers = [];
+                                var locations = [];
+                                var map;
+                                var distanceDirection;
+                                var distanceDisplay;
+                                function string2Location(input, index) {
+                                    var searchBox = new google.maps.places.SearchBox(input);
+                                    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                                    map.addListener('bounds_changed', function() {
+                                        searchBox.setBounds(map.getBounds());
+                                    });
+                                    distanceDirection = new google.maps.DirectionsService();
+                                    distanceDisplay = new google.maps.DirectionsRenderer();
+                                    searchBox.addListener('places_changed', function() {
+                                        var places = searchBox.getPlaces();
+                                        if(places.length == 0) {
+                                            return;
+                                        }
+                                        markers[index].setMap(null);
+                                        var bounds = new google.maps.LatLngBounds();
+                                        places.forEach(function(place) {
+                                            if(!place.geometry) {
+                                                console.log("Returned place contains no geometry");
+                                                return;
+                                            }
+                                            var icon = {
+                                                url: place.icon,
+                                                size: new google.maps.Size(71, 71),
+                                                origin: new google.maps.Point(0, 0),
+                                                anchor: new google.maps.Point(17, 34),
+                                                scaledSize: new google.maps.Size(25, 25)
+                                            };
+                                            markers[index]=new google.maps.Marker({
+                                                map: map,
+                                                icon: icon,
+                                                title: place.name,
+                                                position: place.geometry.location
+                                            });
+                                            if(index == 0) {
+                                                locations[index]=place.geometry.location;
+                                            }
+                                            else {
+                                                locations[index]=place.geometry.location;
+                                            }
+                                            console.log(locations[index].lat() + ", " + locations[index].lng());
+                                            if(place.geometry.viewport) {
+                                                bounds.union(place.geometry.viewport);
+                                            } else {
+                                                bounds.extend(place.geometry.location);
+                                            }
+                                        });
+                                        map.fitBounds(bounds);
+                                        distanceDisplay.setMap(map);
+                                        calcRoute();
+                                    });
+                                }
+                                function initAutocomplete() {
+                                    locations[0] = new google.maps.LatLng();
+                                    locations[1] = new google.maps.LatLng();
+                                    markers[0] = new google.maps.Marker();
+                                    markers[1] = new google.maps.Marker();
+                                    map = new google.maps.Map(document.getElementById('map'), {
+                                        // Default position...
+                                        center: {
+                                            lat: 13.281260,
+                                            lng: 100.924123
+                                        },
+                                        zoom: 13,
+                                        mapTypeId: 'roadmap'
+                                    });
+                                    var field=[];
+                                    field[0] = document.getElementById('from-input');
+                                    field[1] = document.getElementById('to-input');
+                                    string2Location(field[0], 0);
+                                    string2Location(field[1], 1);
+                                    for(var i = 0;i<=1;i++) {
+                                        // console.log(i);
+                                        // console.log(field[i]);
+                                        field[i].addEventListener('change', function() {
+                                            calcRoute();
+                                        });
+                                        field[i].addEventListener('input', function() {
+                                            calcRoute();
+                                        });
+                                        field[i].addEventListener('paste', function() {
+                                            calcRoute();
+                                        });
+                                        field[i].addEventListener('cut', function() {
+                                            calcRoute();
+                                        });
+                                        field[i].addEventListener('copy', function() {
+                                            calcRoute();
+                                        });
+                                    }
+                                    // google.maps.event.addDomListener(document.getElementById('submit'), 'click', calcRoute);
+                                }
+                                function calcDistance(start, end) {
+                                    return(google.maps.geometry.spherical.computeDistanceBetween(start, end) / 1000).toFixed(2); //KM
+                                }
+                                function calcRoute() {
+                                    // console.log("calc...");
+                                    // console.log(locations[0].lat() + ", " + locations[0].lng());
+                                    // console.log(locations[1].lat() + ", " + locations[1].lng());
+                                    var start = new google.maps.LatLng(locations[0].lat(), locations[0].lng());
+                                    var end = new google.maps.LatLng(locations[1].lat(), locations[1].lng());
+                                    // console.log(start + ", " + end);
+                                    if(isNaN(locations[0].lat()) === true || isNaN(locations[0].lng()) === true || isNaN(locations[1].lat()) === true || isNaN(locations[1].lng()) === true) {
+                                        // console.log("End!");
+                                        return;
+                                    }
+                                    var value_distance=document.querySelector("#value-distance");
+                                    var value_price=document.querySelector("#value-price");
+                                    var distance=calcDistance(start, end);
+                                    value_distance.innerHTML=distance + " KM";
+                                    value_price.innerHTML=(distance * 5) + " USD"; // We can use .toFixed()...
+                                    var bounds = new google.maps.LatLngBounds();
+                                    bounds.extend(start);
+                                    bounds.extend(end);
+                                    map.fitBounds(bounds);
+                                    var request = {
+                                        travelMode: google.maps.TravelMode.DRIVING,
+                                        origin: start,
+                                        destination: end,
+                                    };
+                                    distanceDirection.route(request, function(response, status) {
+                                        if(status == google.maps.DirectionsStatus.OK) {
+                                            distanceDisplay.setDirections(response);
+                                            distanceDisplay.setMap(map);
+                                        }
+                                        else {
+                                            // alert("Error: From " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed : " + status);
+                                        }
+                                    });
+                                }
+                            </script>
+			            </section>
+			            <!-- SECTION 3 -->
+			            <h2>3</h2>
+			            <section>
+			                <div class="inner">
+								<div id="form" class="form-horizontal col-sm-4">
+                                    <div class="form-group">
+                                        <b><label for="to-input">Distance</label></b>
+                                        <label id="value-distance" class="form-text">Press on the Booking button to calculate...</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <b><label for="to-input">Price per KM</label></b>
+                                        <label id="price" class="form-text">5 USD</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <b><label for="to-input">Total Price</label></b>
+                                        <label id="value-price" class="form-text">Press on the Booking button to calculate...</label>
+                                    </div>
+                                </div>
+							</div>
+			            </section>
+		        	</div>
+		        </form>
+			</div>
+		</div>
+	</div>
+    <script src="static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIhrhwrQrz0Pp_VnAPSbykM72rLt9Euww&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="static/js/jquery.steps.js"></script>
+    <script src="static/js/main2.js"></script>
+</body>
+</html>

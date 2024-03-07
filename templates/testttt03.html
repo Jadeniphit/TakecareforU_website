@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Save Location</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+        <!-- Google Maps JavaScript API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE"></script>
+        <style>
+            #map {
+                height: 500px;
+            }
+            .form-label {
+                font-weight: bold;
+            }
+            .btn-save {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out;
+            }
+            .btn-save:hover {
+                background-color: #0069d9;
+            }
+        </style>
+</head>
+<body>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="card">
+					<div class="card-header bg-primary text-white">
+						<h1 class="text-center mb-0">Save Location</h1>
+					</div>
+					<div class="card-body">
+						<form method="post" action="{{url_for('add_location')}}">
+							<div class="form-group">
+								<label class="form-label" for="latitude">Latitude:</label>
+								<input type="text" class="form-control" id="latitude" name="latitude" required>
+							</div>
+							<div class="form-group">
+								<label class="form-label" for="longitude">Longitude:</label>
+								<input type="text" class="form-control" id="longitude" name="longitude" required>
+							</div>
+							<div class="text-center">
+								<button type="submit" class="btn btn-save btn-lg mt-3">Save</button>
+							</div>
+						</form>
+						<div id="map" class="mt-5"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+	function initMap() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var latitude = position.coords.latitude;
+				var longitude = position.coords.longitude;
+				document.getElementById("latitude").value = latitude;
+				document.getElementById("longitude").value = longitude;
+
+				var map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: latitude, lng: longitude},
+					zoom: 13
+				});
+
+				var marker = new google.maps.Marker({
+					position: {lat: latitude, lng: longitude},
+					map: map
+				});
+			});
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+
+	initMap();
+</script>
+</body>
+</html>

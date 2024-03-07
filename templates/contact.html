@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+ 
+{% block title %}Take Care for U{% endblock %}
+ 
+{% block content %}
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="hero-img" style="margin-left:-20px" data-aos="zoom-out" data-aos-delay="300">
+          <img src="static/img/contact-1.png" alt=""><br>
+        </br><center><a href="https://www.facebook.com/profile.php?id=100004330503940" target="_blank"><img src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-circle-512.png" width="50px;" height="50px;"></a>
+     			&nbsp;&nbsp;
+      	  <a href="https://www.instagram.com/view_mnw/?hl=en" target="_blank" ><img src="https://cdn4.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Instagram-512.png" width="50px;" height="50px;"></a>
+            &nbsp;&nbsp;
+      	  <a href="https://line.me/en/" target="_blank" ><img src="https://cdn2.iconfinder.com/data/icons/social-media-applications/64/social_media_applications_5-line-512.png" width="50px;" height="50px;"></a>
+        </center>
+        <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+          <div class="row">
+            <div class="col-md-4" style="margin-left:220px;margin-top:10px">
+              <div class="form-group">
+                
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+              </div>
+            </div>
+            <div class="col-md-4" style="margin-top:10px"> 
+              <div class="form-group">
+              
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+              </div>
+            </div>
+            <center><div class="col-md-8" style="margin-top:10px">
+              <div class="form-group">
+                
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+              </div>
+            </div></center>
+            <center><div class="col-md-8" style="margin-top:10px">
+              <div class="form-group">
+                
+                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
+              </div>
+            </div></center>
+            <center><div class="col-md-8" style="margin-top:10px">
+              <div class="form-group">
+                <input type="submit" value="Send Message" class="btn btn-primary">
+                <div class="submitting"></div>
+              </div>
+            </div></center>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg>
+
+  </section>
+{% endblock %}

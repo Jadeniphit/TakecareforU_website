@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Take Care for U</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pytorchjs/0.1.2/pytorch.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #CFFF8D;
+    }
+
+    h2 {
+      color: #425F57;
+      font-weight: bold;
+    }
+    
+    .info-box {
+      background-color: #A8E890;
+      border: 1px solid #749F82;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .info-box li {
+      font-size: 18px;
+      color: #425F57;
+      font-weight: bold;
+    }
+    
+    #map {
+      height: 400px;
+      width: 100%;
+      border: 2px solid #27ae60;
+      margin-top: 20px;
+    }
+
+    #video-container {
+      transform: scale(0.835);
+    }
+    
+    .chat-container {
+      margin-top: 20px;
+      border: 2px solid #27ae60;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      height: 310px;
+    }
+    
+    .chat-messages {
+      height: 210px;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+    
+    .chat-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+    
+    .chat-input input {
+      width: 90%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+  </style>
+</head>
+<body background="BG001.png">
+  <div class="container">
+    <center><h2 style="margin-top:15px">Customer Information</h2></center>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="info-box">
+          <ul>
+            <li>ชื่อ: {{ customer[1] }}</li>
+            <li>นามสกุล: {{ customer[2] }}</li>
+            <li>อายุ: {{ customer[3] }}</li>
+            <li>เพศ: {{ customer[4] }}</li>
+            <li>เบอร์โทร: {{ customer[7] }}</li>
+            <li>โรคและความพิการ: {{ customer[8] }}</li>
+            <li>ตำแหน่ง: {{ customer[9] }}</li>
+          </ul>
+        </div>
+        <div id="map" style="height:400px;width:100%;"></div>
+        <button id="finish-job" class="btn btn-danger" style="margin-top: 20px;margin-bottom:10px; width: 100%;">Finish Job</button>
+      </div>
+      <div class="col-md-6">
+        <div id="video-container" style="width: 100%; height: 100%;">
+        </div>
+        <center><div class="chat-container">
+          <div class="chat-messages" id="messages"></div>
+          <div class="chat-input">
+            <center><form id="chatForm" onsubmit="sendMessage(event)">
+              <input type="text" id="message" placeholder="Type your message...">
+              <center><button style="margin-top:10px"type="submit" class="btn btn-primary">Send</button></center>
+            </form></center>
+          </div>
+        </div></center>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE"></script>
+<script>
+  // ประกาศตัวแปร map ให้เป็นตัวแปรที่มีระดับการเข้าถึงทั่วโลก
+  var customerLatLng;
+
+  function initMap() {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': "{{ customer[9] }}" }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        // กำหนดตำแหน่งลูกค้า
+        customerLatLng = results[0].geometry.location;
+        
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: customerLatLng,
+        });
+  
+        // สร้าง marker แสดงตำแหน่งลูกค้า
+        var marker = new google.maps.Marker({
+          map: map,
+          position: customerLatLng,
+          title: "{{ customer[1] }} {{ customer[2] }}",
+        });
+        
+        // เรียกใช้ฟังก์ชัน getDriverLocation
+        getDriverLocation();
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+
+// ตัวแปรสำหรับเก็บค่าละติจูดและลองติจูดของคนขับรถ
+var driverLat, driverLng;
+
+// ฟังก์ชันสำหรับรับค่าละติจูดและลองติจูดของคนขับรถ
+function getDriverLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      driverLat = position.coords.latitude;
+      driverLng = position.coords.longitude;
+      addDriverMarker(driverLat, driverLng);
+    });
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+// ปรับปรุงฟังก์ชัน calculateRoute
+function calculateRoute() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+  
+    var request = {
+      origin: new google.maps.LatLng(driverLat, driverLng),
+      destination: customerLatLng, // เปลี่ยน destination ที่นี่
+      travelMode: google.maps.TravelMode.DRIVING,
+    };
+  
+    directionsService.route(request, function (result, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsRenderer.setDirections(result);
+      } else {
+        alert("Directions request failed due to " + status);
+      }
+    });
+  }
+  
+  
+  
+  
+  // ปรับปรุงฟังก์ชัน addDriverMarker ให้เรียกใช้ฟังก์ชัน calculateRoute หลังจากเพิ่มตัว marker ของคนขับรถ
+  // ปรับปรุงฟังก์ชัน addDriverMarker
+  function addDriverMarker(lat, lng) {
+    var driverLatLng = new google.maps.LatLng(lat, lng);
+    var driverMarker = new google.maps.Marker({
+      map: map,
+      position: driverLatLng,
+      title: "Driver Location",
+      icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+    });
+    
+    calculateRoute(); // เรียกใช้ฟังก์ชัน calculateRoute ที่นี่
+  }
+  
+
+// เรียกใช้ฟังก์ชัน getDriverLocation ทันทีเมื่อแผนที่โหลดเสร็จ
+google.maps.event.addDomListener(window, 'load', getDriverLocation);      
+    </script>
+
+    
+    
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE&callback=initMap">
+    </script>
+
+    <script>
+      // ... existing JavaScript code ...
+    
+      document.getElementById("finish-job").addEventListener("click", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/finish_job", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            var response = JSON.parse(this.responseText);
+            if (response.status === "success") {
+              alert("Job finished. Customer data deleted.");
+              // Redirect to another page or refresh the page, if needed
+            }
+          }
+        };
+        xhr.send("customer_id=" + {{ customer[0] }});
+      });
+
+  // Add chat functionality
+  var socket = io();
+  
+  function appendMessage(message, sender) {
+    var messages = document.getElementById("messages");
+    var newMessage = document.createElement("p");
+  
+    if (sender === "user") {
+      newMessage.style.fontWeight = "bold";
+    }
+  
+    newMessage.textContent = message;
+    messages.appendChild(newMessage);
+  }
+  
+  socket.on("new message", function (data) {
+    appendMessage(data.message, "other");
+  });
+
+  function sendMessage(event) {
+    event.preventDefault();
+    var message = document.getElementById("message").value;
+    appendMessage(message, "user");
+    socket.emit("new message", { message: message });
+    document.getElementById("message").value = "";
+  }
+
+  document.getElementById("chatForm").addEventListener("submit", sendMessage);
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRaJ0a97IIUUJLv00Cqbaxcg9ndlLQvyE&callback=initMap">
+</script>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // สร้าง <video> element เพื่อแสดงวิดีโอจากกล้อง
+    var videoContainer = document.getElementById('video-container');
+    var videoElement = document.createElement('video');
+    videoElement.autoplay = true;
+    videoElement.muted = true;
+    videoContainer.appendChild(videoElement);
+  
+    // ฟังก์ชันสำหรับการตรวจจับวัตถุด้วย YOLOv5
+    
+    async function detectObjects() {
+      // เริ่มกล้องวิดีโอ
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          videoElement.srcObject = stream;
+  
+          // โหลดโมเดล YOLOv5 จากไฟล์ .pt
+          return torch.jit.load('C:\Users\ADMIN\yolov5\yolov5s.torchscript.pt');
+        })
+        .then(async function(model) {
+          // กำหนด canvas เพื่อแสดงผลลัพธ์
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.width = videoElement.videoWidth;
+          canvas.height = videoElement.videoHeight;
+          videoContainer.appendChild(canvas);
+  
+          // ฟังก์ชันสำหรับการแสดงผลลัพธ์
+          function drawPrediction(predictions) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            predictions.forEach(prediction => {
+              const [x, y, width, height] = prediction.bbox;
+              context.strokeStyle = 'red';
+              context.lineWidth = 2;
+              context.strokeRect(x, y, width, height);
+            });
+          }
+  
+          // ฟังก์ชันสำหรับแปลงรูปภาพจากกล้องให้เป็น Tensor
+          function toTensor(image) {
+            const imageTensor = tfjs.browser.fromPixels(image);
+            return imageTensor.permute(2, 0, 1).to('cpu').float().div(255);
+          }
+  
+          // สร้างฟังก์ชันสำหรับการตรวจจับวัตถุในเฟรมต่อเนื่อง
+          async function detectFrame() {
+            const image = toTensor(videoElement);
+            const predictions = await model(image.to('cpu').float());
+            drawPrediction(predictions);
+            requestAnimationFrame(detectFrame);
+          }
+  
+          // เริ่มตรวจจับวัตถุ
+          detectFrame();
+        })
+        .catch(function(error) {
+          console.error("Error loading YOLOv5 model: ", error);
+        });
+    }
+  
+    // เรียกใช้ฟังก์ชัน detectObjects เพื่อเริ่มการทำงาน
+    detectObjects();
+  });
+  </script>
+  
+
+
+</html>

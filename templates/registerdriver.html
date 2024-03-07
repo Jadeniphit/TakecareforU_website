@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Take Care for U</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: green;
+            font-size: 40px;
+            text-align: center;
+        }
+        form {
+            margin: 0 auto;
+            width: 50%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+        }
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register For Driver</h1>
+    <form method="POST" action="{{ url_for('registerdriver') }}" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required id="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required id="password"><br><br>
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" required id="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required id="email"><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" required id="phone"><br><br>
+
+        <label for="car_type">Car type:</label>
+        <input type="text" name="cartype" required id="cartype"><br><br>
+
+        <label for="license">License:</label>
+        <input type="text" name="license" required id="license"><br><br>
+
+        <label for="vehicle_plate">Vehicle plate:</label>
+        <input type="text" name="vehicle_plate" required id="vehicle_plate"><br><br>
+
+        <label for="profile_image">Profile Image:</label>
+        <input type="file" name="profile_image" id="profile_image"><br><br>
+        <center><input type="submit" value="Register"></center>
+        <center><div id="msg" style="margin-bottom:20px;margin-top:20px;color:green;">{{ msg }}</div></center>
+        <center><h2><strong>Or <a href="{{ url_for('Riderlogin') }}" style="color: green;">Sign in</a></strong></h2></center>
+    </form>
+</body>
+</html>
